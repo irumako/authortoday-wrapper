@@ -23,10 +23,12 @@ class Reference(Enum):
 class Catalog(Base):
     URL = 'https://api.author.today/v1/catalog'
 
-    def get_reference(self, field: Reference) -> Any:
+    async def get_reference(self, field: Reference) -> Any:
 
-        return self.get(f"{self.URL}/{field.value}").json()
+        response = await self.get(f"{self.URL}/{field.value}")
+        return response.json()
 
-    def search(self, **params) -> Any:
+    async def search(self, **params) -> Any:
 
-        return self.get(f"{self.URL}/search", params=params).json()
+        response = await self.get(f"{self.URL}/search", params=params)
+        return response.json()
